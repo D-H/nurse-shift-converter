@@ -3,6 +3,11 @@ import DateParser
 import Constants
 import ICSFileCreator
 
+# 1 - Get email
+# 2 - Convert
+# 3 - Clean up
+# 4 - Send email
+
 def main():
 
     month = DateParser.get_month(Constants.TEST_DATEBASE_FILE_NAME)

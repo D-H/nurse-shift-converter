@@ -21,17 +21,29 @@ def get_year(filename):
     else:
         return datetime.datetime.now().strftime("%Y")
 
-def get_utc_date_time(date, time):
+
+def get_utc_date_time_end_date(date, start_time, end_time):
+    day_changed_during_shift = False
+
+    # The day has skipped over because start time is before end time
+    if end_time < start_time:
+        day_changed_during_shift = True
+
+    return get_utc_date_time(date, end_time, day_changed_during_shift)
+
+def get_utc_date_time(date, time, day_changed_during_shift):
     date = datetime.datetime.strptime(date, "%m-%d-%Y %H:%M:%S")
     time = datetime.datetime.strptime(time, "%H:%M:%S")
 
+    # Add extra day to schedule
+    if day_changed_during_shift:
+        date = date + datetime.timedelta(days=1)
+
+    # Combine date and time
     date_time = date + datetime.timedelta(hours=time.hour, minutes=time.minute, seconds=time.second)
 
-    # wtf dawg
-    # date_time = temp_date_time + datetime.timedelta(hours=12)
-
-    # Could do conversions here
-    date_time = date_time - datetime.timedelta(hours=6)
+    # UTC to mountain time
+    date_time = date_time + datetime.timedelta(hours=6)
 
     year = date_time.year
     month = '%02d' % date_time.month
