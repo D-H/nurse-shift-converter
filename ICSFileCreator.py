@@ -1,5 +1,6 @@
 import Constants
 import DateParser
+import os
 
 def __write_header(output_file):
     output_file.write('BEGIN:VCALENDAR\r\n')
@@ -23,7 +24,7 @@ def __write_events(output_file, calender_entries):
 
 
 def create_ics_file(calender_entries):
-    with open(Constants.OUTPUT_FILE, 'w+') as output_file:
+    with open(Constants.OUTPUT_FILE_FULL, 'w+') as output_file:
         __write_header(output_file)
         __write_events(output_file, calender_entries)
         __write_footer(output_file)

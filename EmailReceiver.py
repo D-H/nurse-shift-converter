@@ -1,8 +1,8 @@
 import imaplib
 import email
-import os
 
 import Constants
+import IncomingMessage
 
 # -------------------------------------------------
 #
@@ -10,67 +10,74 @@ import Constants
 #
 # ------------------------------------------------
 
-detach_dir = '.'
 
-def read_email_from_gmail():
-    try:
-        imapSession = imaplib.IMAP4_SSL(Constants.SMTP_SERVER)
-        typ, accountDetails = imapSession.login(Constants.FROM_EMAIL,Constants.FROM_PWD)
+def get_unread_emails():
+    imap_session = __login_to_gmail()
+    mail_id_list = __get_unread_mail_ids(imap_session)
+    incoming_messages = __create_incoming_messages(imap_session, mail_id_list)
+    __logout_of_gmail(imap_session)
+
+    return incoming_messages
+
+
+def __login_to_gmail():
+    imap_session = imaplib.IMAP4_SSL(Constants.SMTP_SERVER)
+    typ, account_details = imap_session.login(Constants.FROM_EMAIL,Constants.FROM_PWD)
+
+    if typ != 'OK':
+        print 'Not able to sign in!'
+        raise
+
+    return imap_session
+
+
+def __get_unread_mail_ids(imap_session):
+    imap_session.select('inbox')
+
+    type, data = imap_session.search(None, Constants.EMAIL_INBOX_FILTER)
+
+    if type != 'OK':
+        print 'Error searching Inbox.'
+        raise
+
+    mail_ids = data[0]
+
+    mail_id_list = mail_ids.split()
+
+    return mail_id_list
+
+
+def __create_incoming_messages(imap_session, mail_id_list):
+    incoming_messages = []
+
+    for i in mail_id_list:
+        typ, messageParts = imap_session.fetch(i, '(RFC822)')
 
         if typ != 'OK':
-            print 'Not able to sign in!'
+            print 'Error fetching mail.'
             raise
 
-        imapSession.select('inbox')
+        emailBody = messageParts[0][1]
+        mail = email.message_from_string(emailBody)
 
-        # type, data = mail.search(None, '(UNSEEN)')
-        type, data = imapSession.search(None, '(ALL)')
+        email_subject = mail['subject']
+        email_from = mail['from']
 
-        if type != 'OK':
-            print 'Error searching Inbox.'
-            raise
+        for part in mail.walk():
+            if part.get_content_maintype() == 'multipart':
+                continue
+            if part.get('Content-Disposition') is None:
+                continue
 
-        mail_ids = data[0]
+            incoming_message = IncomingMessage.IncomingMessage(email_from, email_subject, part)
+            incoming_messages.append(incoming_message)
 
-        mail_id_list = mail_ids.split()
-        # first_email_id = int(id_list[0])
-        # latest_email_id = int(id_list[-1])
+    return incoming_messages
 
-
-        for i in mail_id_list[1]:
-            typ, messageParts = imapSession.fetch(i, '(RFC822)' )
-
-            if typ != 'OK':
-                print 'Error fetching mail.'
-                raise
-
-            emailBody = messageParts[0][1]
-            mail = email.message_from_string(emailBody)
-
-            for part in mail.walk():
-                if part.get_content_maintype() == 'multipart':
-                    # print part.as_string()
-                    continue
-                if part.get('Content-Disposition') is None:
-                    # print part.as_string()
-                    continue
-
-                fileName = part.get_filename()
-
-                if bool(fileName):
-                    filePath = os.path.join(detach_dir, 'DatabaseDownload', fileName)
-                    if not os.path.isfile(filePath):
-                        print fileName
-                        fp = open(filePath, 'wb')
-                        fp.write(part.get_payload(decode=True))
-                        fp.close()
-
-        imapSession.close()
-        imapSession.logout()
-
-    except Exception, e:
-        print str(e)
+def __logout_of_gmail(imap_session):
+    imap_session.close()
+    imap_session.logout()
 
 if __name__ == "__main__":
-    read_email_from_gmail()
+    get_unread_emails()
 

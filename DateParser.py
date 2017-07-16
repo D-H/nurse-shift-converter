@@ -3,23 +3,14 @@ import re
 import Constants
 import datetime
 
-def get_month(filename):
-    m = re.search('(?<=\-)(.*?)(?=\-)', filename)
-    month = m.group(0)
 
-    if month in Constants.MONTH_TO_NUMBER:
-        return Constants.MONTH_TO_NUMBER[month]
-    else:
-        return datetime.datetime.now().strftime("%m")
+def get_month_and_year(subject):
+    for month in Constants.MONTH_TO_NUMBER:
+        if month in subject:
+            return Constants.MONTH_TO_NUMBER[month], Constants.MONTH_TO_YEAR[month]
 
-def get_year(filename):
-    m = re.search('(\d{4})', filename)
-    year = m.group(0)
-
-    if year in Constants.ACCEPTABLE_YEARS:
-        return year
-    else:
-        return datetime.datetime.now().strftime("%Y")
+    print "Could not parse date in " + subject
+    raise
 
 
 def get_utc_date_time_end_date(date, start_time, end_time):

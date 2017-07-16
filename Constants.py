@@ -1,8 +1,13 @@
-DATABASE_DOWNLOAD_FOLDER = "DatabaseDownload/"
-TEST_DATEBASE_FILE_NAME = "shift_worker_06-Jul-2017.swc"
+import os
 
-OUTPUT_FILE_DIRECTORY = "Output/"
+DATABASE_DOWNLOAD_FOLDER = "DatabaseDownload/"
+DATABASE_DOWNLOAD_FILE = "Downloaded_File.sqlite"
+TEST_DATEBASE_FILE_NAME = "shift_worker_20-Jun-2017.sqlite"
+
+OUTPUT_DIRECTORY = "Output"
 OUTPUT_FILE = "converted_schedule.ics"
+OUTPUT_FILE_FULL = os.path.join(".", OUTPUT_DIRECTORY, OUTPUT_FILE)
+
 
 SQL_QUERY =  '''SELECT  date, start, end, description, character
                 FROM shifts
@@ -37,11 +42,27 @@ MONTH_TO_NUMBER = {
     'December': '12'
 }
 
-# Prevent SQL Injections
-ACCEPTABLE_YEARS = ['2017', '2018', '2019']
+MONTH_TO_YEAR = {
+    'January': '2018',
+    'February': '2018',
+    'March': '2018',
+    'April': '2018',
+    'May': '2018',
+    'June': '2017',
+    'July': '2017',
+    'August': '2017',
+    'September': '2017',
+    'October': '2017',
+    'November': '2017',
+    'December': '2017'
+}
 
 ORG_EMAIL   = "@gmail.com"
 FROM_EMAIL  = "shift.converter.mountain.time" + ORG_EMAIL
 FROM_PWD    = "converter4Sofe"
 SMTP_SERVER = "imap.gmail.com"
 SMTP_PORT   = 993
+SUBJECT_EMAIL = "Shift converted!"
+
+EMAIL_INBOX_FILTER = '(UNSEEN)'
+EMAIL_INBOX_FILTER = '(ALL)'
