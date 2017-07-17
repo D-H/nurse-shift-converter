@@ -8,6 +8,7 @@ OUTPUT_DIRECTORY = "Output"
 OUTPUT_FILE = "converted_schedule.ics"
 OUTPUT_FILE_FULL = os.path.join(".", OUTPUT_DIRECTORY, OUTPUT_FILE)
 
+DELAY_IN_SECONDS = 3
 
 SQL_QUERY =  '''SELECT  date, start, end, description, character
                 FROM shifts
@@ -63,6 +64,7 @@ FROM_PWD    = "converter4Sofe"
 SMTP_SERVER = "imap.gmail.com"
 SMTP_PORT   = 993
 SUBJECT_EMAIL = "Shift converted!"
+EMAIL_ATTACHMENT_FILE_EXTENSTION = '.swc'
 
 EMAIL_INBOX_FILTER = '(UNSEEN)'
-EMAIL_INBOX_FILTER = '(ALL)'
+# EMAIL_INBOX_FILTER = '(ALL)'

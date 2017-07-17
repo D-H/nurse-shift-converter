@@ -68,6 +68,8 @@ def __create_incoming_messages(imap_session, mail_id_list):
                 continue
             if part.get('Content-Disposition') is None:
                 continue
+            if not Constants.EMAIL_ATTACHMENT_FILE_EXTENSTION in part.get_filename():
+                continue
 
             incoming_message = IncomingMessage.IncomingMessage(email_from, email_subject, part)
             incoming_messages.append(incoming_message)
