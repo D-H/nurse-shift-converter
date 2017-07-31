@@ -14,8 +14,8 @@ SQL_QUERY =  '''SELECT  date, start, end, description, character
                 FROM shifts
                 INNER JOIN shifttype
                 ON shifts.shifttype = shifttype.primarykey
-                WHERE date >= "{}"
-                AND date < "{}"
+                WHERE substr(date,7,4)||substr(date,4,2)||substr(date,1,2)
+                BETWEEN {} AND {}
                 ORDER BY DATE; '''
 
 CHARACTER_TO_DESCRIPTION = {

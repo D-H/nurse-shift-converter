@@ -10,8 +10,8 @@ def get_schedule_data(month, year):
     c = conn.cursor()
 
     # Create query
-    start_date = "{}-01-{}".format(month, year)
-    end_date = "{}-31-{}".format(month, year)
+    start_date = "'{}{}00'".format(year, month)
+    end_date = "'{}{}32'".format(year, month)
 
     completed_sql_query = Constants.SQL_QUERY.format(start_date, end_date)
 
