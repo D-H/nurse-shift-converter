@@ -63,7 +63,7 @@ FROM_EMAIL  = "shift.converter.mountain.time" + ORG_EMAIL
 FROM_PWD    = "converter4Sofe"
 SMTP_SERVER = "imap.gmail.com"
 SMTP_PORT   = 993
-SUBJECT_EMAIL = "Shift converted!"
+SUBJECT_EMAIL = "Shifts converted for this month!"
 EMAIL_ATTACHMENT_FILE_EXTENSTION = '.swc'
 
 EMAIL_INBOX_FILTER = '(UNSEEN)'
