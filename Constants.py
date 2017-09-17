@@ -4,9 +4,10 @@ DATABASE_DOWNLOAD_FOLDER = "DatabaseDownload/"
 DATABASE_DOWNLOAD_FILE = "Downloaded_File.sqlite"
 TEST_DATEBASE_FILE_NAME = "shift_worker_20-Jun-2017.sqlite"
 
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 OUTPUT_DIRECTORY = "Output"
 OUTPUT_FILE = "converted_schedule.ics"
-OUTPUT_FILE_FULL = os.path.join(".", OUTPUT_DIRECTORY, OUTPUT_FILE)
+OUTPUT_FILE_FULL = os.path.join(DIR_PATH, OUTPUT_DIRECTORY, OUTPUT_FILE)
 
 DELAY_IN_SECONDS = 3
 
@@ -14,7 +15,7 @@ SQL_QUERY =  '''SELECT  date, start, end, description, character
                 FROM shifts
                 INNER JOIN shifttype
                 ON shifts.shifttype = shifttype.primarykey
-                WHERE substr(date,7,4)||substr(date,4,2)||substr(date,1,2)
+                WHERE substr(date,7,4)||substr(date,1,2)||substr(date,4,2)
                 BETWEEN {} AND {}
                 ORDER BY DATE; '''
 

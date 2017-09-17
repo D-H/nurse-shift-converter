@@ -7,6 +7,6 @@ def clean_up():
     os.remove(Constants.OUTPUT_FILE_FULL)
 
     # Delete downloaded file from email
-    path = os.path.join('.', Constants.DATABASE_DOWNLOAD_FOLDER, Constants.DATABASE_DOWNLOAD_FILE)
+    path = os.path.join(Constants.DIR_PATH, Constants.DATABASE_DOWNLOAD_FOLDER, Constants.DATABASE_DOWNLOAD_FILE)
     os.remove(path)
 

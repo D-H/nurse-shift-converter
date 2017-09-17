@@ -5,24 +5,19 @@ import EmailReceiver
 import EmailMessageValidator
 import EmailSender
 import Cleanup
-import Constants
 
-import time
 import datetime
 
 
 def main():
-    while True:
-        time.sleep(Constants.DELAY_IN_SECONDS)
+    received_emails = EmailReceiver.get_unread_emails()
+    validated_emails = EmailMessageValidator.validate_messages(received_emails)
 
-        received_emails = EmailReceiver.get_unread_emails()
-        validated_emails = EmailMessageValidator.validate_messages(received_emails)
-
-        for email in validated_emails:
-            __create_ics_file(email)
-            EmailSender.send_email_from_gmail(email)
-            Cleanup.clean_up()
-            print "Sent out email! " + str(datetime.datetime.now())
+    for email in validated_emails:
+        __create_ics_file(email)
+        EmailSender.send_email_from_gmail(email)
+        Cleanup.clean_up()
+        print "Sent out email! " + str(datetime.datetime.now()) + " - " + email.from_address + " - " + email.subject
 
 
 def __create_ics_file(email):

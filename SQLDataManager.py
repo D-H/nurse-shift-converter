@@ -1,12 +1,13 @@
 import sqlite3
+import os
 import Constants
 from CalendarEntry import CalendarEntry
 
 
 def get_schedule_data(month, year):
     # Connect to database
-    connection_string = Constants.DATABASE_DOWNLOAD_FOLDER + Constants.DATABASE_DOWNLOAD_FILE
-    conn = sqlite3.connect(connection_string)
+    database_file = os.path.join(Constants.DIR_PATH, Constants.DATABASE_DOWNLOAD_FOLDER, Constants.DATABASE_DOWNLOAD_FILE)
+    conn = sqlite3.connect(database_file)
     c = conn.cursor()
 
     # Create query

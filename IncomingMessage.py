@@ -15,7 +15,7 @@ class IncomingMessage:
         fileName = self.attachment.get_filename()
 
         if bool(fileName):
-            filePath = os.path.join('.', Constants.DATABASE_DOWNLOAD_FOLDER, Constants.DATABASE_DOWNLOAD_FILE)
+            filePath = os.path.join(Constants.DIR_PATH, Constants.DATABASE_DOWNLOAD_FOLDER, Constants.DATABASE_DOWNLOAD_FILE)
             if not os.path.isfile(filePath):
                 fp = open(filePath, 'wb')
                 fp.write(self.attachment.get_payload(decode=True))
