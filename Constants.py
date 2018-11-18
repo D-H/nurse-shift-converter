@@ -45,23 +45,24 @@ MONTH_TO_NUMBER = {
 }
 
 MONTH_TO_YEAR = {
-    'January': '2018',
-    'February': '2018',
-    'March': '2018',
-    'April': '2018',
-    'May': '2018',
-    'June': '2017',
-    'July': '2017',
-    'August': '2017',
-    'September': '2017',
-    'October': '2017',
-    'November': '2017',
-    'December': '2017'
+    'January': '2019',
+    'February': '2019',
+    'March': '2019',
+    'April': '2019',
+    'May': '2019',
+    'June': '2019',
+    'July': '2019',
+    'August': '2019',
+    'September': '2019',
+    'October': '2019',
+    'November': '2018',
+    'December': '2018'
 }
 
 ORG_EMAIL   = "@gmail.com"
-FROM_EMAIL  = "shift.converter.mountain.time" + ORG_EMAIL
-FROM_PWD    = "converter4Sofe"
+# Change to correct gmail account information
+FROM_EMAIL  = "" + ORG_EMAIL
+FROM_PWD    = "" 
 SMTP_SERVER = "imap.gmail.com"
 SMTP_PORT   = 993
 SUBJECT_EMAIL = "Shifts converted for this month!"
